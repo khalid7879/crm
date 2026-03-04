@@ -2,56 +2,45 @@ name: 🚀 Deploy to PROD Server
 
 on:
   push:
-    branches:
-      - main # Change this if you're using a different branch
+    branches: [ main ]
 
 jobs:
   deploy:
-    name: Deploy App to CentOS via SSH
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Set up SSH Connection
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519_249 
-        
-          chmod 600 ~/.ssh/id_ed25519_249
-          ssh-keyscan -p 6072 -H 114.130.69.249 >> ~/.ssh/known_hosts
-
-      - name: Deploy to Server
-        run: |
-          ssh -i ~/.ssh/id_ed25519_249 -p 6072 root@114.130.69.249<< 'EOF'
-            echo "Connected to CentOS server"
-
-            # Navigate to your project directory
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: 114.130.69.249
+          port: 6072
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            echo "✅ Connected to server"
 
             cd /var/www/html
-
-            # If folder doesn't exist, clone it fresh (use your actual repo)
 
             if [ ! -d "crm/.git" ]; then
               rm -rf crm
               git clone -b main git@github.com:khalid7879/crm.git crm
             else
               cd crm
-              git pull origin main  
+              git pull origin main || git fetch --all && git reset --hard origin/main
             fi
 
             cd crm
 
-            # Pull latest changes from GitHub
-            git pull origin main
+            echo "✅ Latest code pulled"
 
-            # Optional: Add your build/deploy steps below
-            # npm install
-            # npm run build
-            # composer install --optimize-autoloader
+            # === Add your build/deploy commands here ===
+            # composer install --no-dev --optimize-autoloader
             # php artisan migrate --force
-            # systemctl restart nginx
-            # systemctl restart php-fpm
+            # php artisan optimize:clear
+            # systemctl restart nginx php-fpm
+            # pm2 restart all   # if using Node.js
 
-            echo "Code deployed successful done"
+            echo "🎉 Deployment completed successfully!"
