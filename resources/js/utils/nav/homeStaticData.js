@@ -135,7 +135,7 @@ export const featuresSectionTopData = {
  * @import { homeHeroSectionComponentData } from "@/utils/nav/homeStaticData";
  */
 export const homeHeroSectionComponentData = {
-    title: "AI-Driven CRM for Growing Teams Simple, Affordable, Powerful",
+    title: "AI-Driven CRM for Growing Teams Simple, Affordable, Powerful TEST",
     description:
         "Track your entire sales pipeline in one centralized CRM. Automatically score leads, trigger follow-ups, run targeted marketing campaigns, and increase team productivity - so you can convert more leads into revenue",
 };

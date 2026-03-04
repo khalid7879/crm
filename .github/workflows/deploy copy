@@ -20,8 +20,6 @@ jobs:
           username: root
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            set -e  # stop on any error
-
             echo "✅ Connected to server"
 
             cd /var/www/html
@@ -31,18 +29,18 @@ jobs:
               git clone -b main git@github.com:khalid7879/crm.git crm
             else
               cd crm
-              git pull origin main || { git fetch --all && git reset --hard origin/main; }
+              git pull origin main || git fetch --all && git reset --hard origin/main
             fi
 
             cd crm
 
             echo "✅ Latest code pulled"
 
-            # Rebuild & restart only app container
-            docker-compose build --no-cache app
-            docker-compose up -d --force-recreate --no-deps app
+            # === Add your build/deploy commands here ===
+            # composer install --no-dev --optimize-autoloader
+            # php artisan migrate --force
+            # php artisan optimize:clear
+            # systemctl restart nginx php-fpm
+            # pm2 restart all   # if using Node.js
 
-            echo "🎉 Deployment completed!"
-
-            # Optional: show status
-            docker-compose ps
+            echo "🎉 Deployment completed successfully!"
