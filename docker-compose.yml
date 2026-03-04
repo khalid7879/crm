@@ -17,7 +17,7 @@ services:
     env_file:
       - .env
     environment:
-      RUN_TENANT_SEED: "true" # enable only once when needed
+      RUN_TENANT_SEED: "false" # enable only once when needed
     depends_on:
       db:
         condition: service_healthy
