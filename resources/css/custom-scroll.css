@@ -1,0 +1,95 @@
+/**
+* scrollbar-thin-scrollbar
+* Base scrollbar hidden 
+*/
+.scrollbar-thin-scrollbar::-webkit-scrollbar {
+    width: 20px;
+    background: transparent;
+}
+
+.scrollbar-thin-scrollbar:hover::-webkit-scrollbar {
+    width: 16px;
+}
+
+.scrollbar-thin-scrollbar::-webkit-scrollbar-track {
+    background: #ffffff;
+    border-radius: 10px;
+    margin-block: 4px;
+}
+
+.scrollbar-thin-scrollbar::-webkit-scrollbar-thumb {
+    background-color: var(--brandColor);
+    border-radius: 10px;
+    border: 2px solid #ffffff;
+    transition: background-color 0.3s ease;
+}
+
+/* Firefox support */
+.scrollbar-thin-scrollbar {
+    scrollbar-width: none;
+}
+
+.scrollbar-thin-scrollbar:hover {
+    scrollbar-width: thin;
+    scrollbar-color: var(--brandColor) transparent;
+}
+
+/**
+ * dataManagementScrollbar
+ *
+ * @author     Sakil Jomadder <sakil.diu.cse@gmail.com>
+ * @updated    2025-12-17
+ *
+ * @description
+ *   Custom scrollbar styling for data management components.
+ *   - Scrollbar thumb is transparent by default (hidden but functional).
+ *   - On hover over the scrollable area, the thumb becomes visible with --brandColor.
+ *   - White track background with rounded corners for a clean, modern look.
+ *   - Includes smooth transition for thumb appearance.
+ *   - Full cross-browser support: WebKit-based browsers (Chrome, Edge, Safari) and Firefox.
+ *
+ * @usage
+ *   Apply the class `.dataManagementScrollbar` to any scrollable container:
+ *   <div class="dataManagementScrollbar">...</div>
+ *
+ * @notes
+ *   - Scrollbar width is set to 8px for consistency (adjust if needed).
+ *   - Firefox uses the native `scrollbar-color` and `scrollbar-width` properties with hover support.
+ *   - The track remains visible subtly, but the thumb only appears on hover.
+ */
+.dataManagementScrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.dataManagementScrollbar::-webkit-scrollbar-track {
+    background: #ffffff;
+    border-radius: 10px;
+    margin-block: 4px;
+}
+
+.dataManagementScrollbar::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 10px;
+    border: 2px solid #ffffff;
+    transition: background-color 0.3s ease;
+}
+
+.dataManagementScrollbar:hover::-webkit-scrollbar-thumb {
+    background-color: var(--brandColor);
+}
+
+/* Optional hover feedback */
+.dataManagementScrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: var(--brandColor-hover, var(--brandColor));
+}
+
+/* Firefox support */
+.dataManagementScrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: transparent #ffffff;
+}
+
+.dataManagementScrollbar:hover {
+    scrollbar-color: var(--brandColor) #ffffff;
+}

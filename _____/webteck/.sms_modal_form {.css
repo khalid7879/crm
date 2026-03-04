@@ -1,0 +1,47 @@
+.sms_modal_form {
+  background: transparent;
+  /* display: grid; */
+  gap: 19px;
+  margin-top: 15px;
+  /* grid-template-columns: 572px 1fr; */
+  padding: 0 20px;
+}
+
+.sms_modal_form .form_group {
+  background: var(--bgSecondary);
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  border-radius: 5px;
+  margin: 10px 0 !important;
+  padding: 0 5px;
+}
+
+.sms_modal_form .form_input {
+  width: 83%;
+  height: 39px;
+  background: radial-gradient(var(--bgSecondary), var(--bgPrimary));
+  color: var(--fontPrimary);
+  border: none;
+  margin-left: -3rem;
+  text-align: center;
+}
+
+.sms_modal_form .form_select option {
+  background-color: var(--bgPrimary);
+}
+
+/* Crm modal form css  */
+.sms_modal_form_title {
+  font-size: 14px;
+  color: var(--borderSecondary);
+  display: block;
+  text-align: center;
+  margin: 10px 0;
+  text-shadow: 1px -2px 1px var(--fontLight);
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  position: relative;
+}

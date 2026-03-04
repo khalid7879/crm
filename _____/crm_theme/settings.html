@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRM Dashboard (Tailwind)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- ApexCharts, jQuery, SortableJS -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans&family=Hind+Siliguri:wght@300;400;500;600;700&family=Nunito:wght@400;600;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="bg-gray-100 font-[Nunito] overflow-hidden">
+    <!-- <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      test
+    </div>
+  </div> -->
+    <!-- Navbar -->
+    <nav id="header"
+        class="w-full flex items-center justify-between px-4 py-3 bg-gradient-to-r from-red-600 to-purple-700 text-white shadow-md">
+        <div class="flex items-center gap-3">
+            <button id="toggleSidebar" class="text-white focus:outline-none">
+                <i class="bi bi-list text-xl"></i>
+            </button>
+            <a href="#" class="font-bold text-lg">Image</a>
+        </div>
+
+        <div class="hidden md:flex items-center gap-2 bg-white bg-opacity-10 rounded-md px-2 py-1 backdrop-blur">
+            <select onchange="resizeSelect(this)" class="bg-transparent text-white outline-none pr-4">
+                <option selected>All</option>
+                <option>Action</option>
+                <option>Another action</option>
+                <option>Something else</option>
+                <option>A very long text</option>
+            </select>
+            <i class="bi bi-search text-white px-2"></i>
+            <input type="text" class="bg-transparent text-white placeholder-white outline-none"
+                placeholder="Comments" />
+        </div>
+
+        <ul class="flex gap-4 items-center">
+            <li><a href="#"><i class="bi bi-plus-square-fill text-xl"></i></a></li>
+            <li><a href="#"><i class="bi bi-bell-fill text-xl"></i></a></li>
+            <li class="relative" id="profileMenu">
+                <a href="#" id="profileToggle">
+                    <i class="bi bi-person-circle text-2xl cursor-pointer"></i>
+                </a>
+
+                <!-- Dropdown Menu -->
+                <div id="profileDropdown"
+                    class="hidden absolute right-0 mt-2 w-40 bg-white border border-gray-200  shadow-lg z-50">
+                    <ul class="text-sm text-gray-700">
+                        <li>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Settings</a>
+                        </li>
+                        <li>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+
+    <div class="d-flex">
+
+        <!-- Sidebar starts -->
+        <div class="flex">
+
+            <!-- Sidebar starts -->
+
+            <nav id="sidebar" class="bg-gray-100 w-44 transition-all duration-300 ease-in-out fixed h-full z-20">
+                <ul class="flex flex-col">
+                    <li>
+                        <a class="flex items-center px-4 py-2 text-gray-600 hover:text-black font-semibold" href="#">
+                            <i class="bi bi-house-door-fill text-lg mr-2" title="Dashboard"></i>
+                            <span class="link-text text-sm font-bold">Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="flex items-center px-4 py-2 text-gray-600 hover:text-black font-semibold" href="#">
+                            <i class="bi bi-stickies-fill text-lg mr-2" title="Task"></i>
+                            <span class="link-text text-sm font-bold">Task</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="flex items-center px-4 py-2 text-gray-600 hover:text-black font-semibold" href="#">
+                            <i class="bi bi-person-lines-fill text-lg mr-2" title="Contact"></i>
+                            <span class="link-text text-sm font-bold">Contact</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="flex items-center px-4 py-2 text-gray-600 hover:text-black font-semibold" href="#">
+                            <i class="bi bi-people-fill text-lg mr-2" title="Leads"></i>
+                            <span class="link-text text-sm font-bold">Leads</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="flex items-center px-4 py-2 text-gray-600 hover:text-black font-semibold" href="#">
+                            <i class="bi bi-building-fill text-lg mr-2" title="Organizations"></i>
+                            <span class="link-text text-sm font-bold">Organizations</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Main Content -->
+            <main id="main" class="ml-44 transition-all duration-300 flex-1 pl-4">
+                <a class="fixed top-[75px] right-0 text-xl bg-white/20 text-purple-700 px-3 py-1 border border-dashed border-purple-700 rounded-l-lg z-10 cursor-pointer hover:text-purple-800"
+                    onclick="switcher()">
+                    <i class="bi bi-gear-wide-connected animate-spin-slow"></i>
+                </a>
+
+                <!-- Header Color Switcher -->
+                <div id="mode_switcher" class="hidden fixed top-[130px] right-8 bg-white p-5 rounded-lg shadow-lg z-10">
+                    <p class="text-center text-gray-800 mb-2">Select header Color</p>
+                    <div class="flex justify-center gap-2 flex-wrap">
+                        <div class="h-6 w-6 rounded-full border cursor-pointer"
+                            data-color="linear-gradient(to left, #EC1E25, #D76F72, #635cb1, #5c32a5)"
+                            style="background: linear-gradient(to left, #EC1E25, #D76F72, #635cb1, #5c32a5);"></div>
+                        <div class="h-6 w-6 rounded-full border cursor-pointer" data-color="#f85f0a"
+                            style="background: #f85f0a;"></div>
+                        <div class="h-6 w-6 rounded-full border cursor-pointer"
+                            data-color="linear-gradient(135deg, skyblue, cadetblue)"
+                            style="background: linear-gradient(135deg, skyblue, cadetblue);"></div>
+                    </div>
+                </div>
+
+                <!-- <h4 class="p-1" style="background-color: #fff; color: #1e1e1e;">Settings Section</h4> -->
+                <div class="settings-section flex">
+                    <!-- Left Panel Navigation -->
+                    <div class="left-panel w-64 bg-white p-4 border-r overflow-y-auto">
+                        <div class="mb-4">
+                            <input type="text" placeholder="Search System Settings"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        </div>
+
+                        <div class="mb-6">
+                            <p class="text-xs font-semibold text-gray-500 mb-2">USERS</p>
+                            <ul class="space-y-1">
+                                <li><a href="#"
+                                        class="nav-link text-sm font-medium text-gray-700 hover:text-purple-700 active">Users</a>
+                                </li>
+                                <li><a href="#"
+                                        class="nav-link text-sm font-medium text-gray-700 hover:text-purple-700">Queues</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="mb-6">
+                            <p class="text-xs font-semibold text-gray-500 mb-2">SECURITY</p>
+                            <ul class="space-y-1">
+                                <li><a href="#"
+                                        class="nav-link text-sm font-medium text-gray-700 hover:text-purple-700">Permissions</a>
+                                </li>
+                                <li><a href="#"
+                                        class="nav-link text-sm font-medium text-gray-700 hover:text-purple-700">Teams</a>
+                                </li>
+                                <li><a href="#"
+                                        class="nav-link text-sm font-medium text-gray-700 hover:text-purple-700">Default
+                                        Item Visibility</a></li>
+                                <li><a href="#"
+                                        class="nav-link text-sm font-medium text-gray-700 hover:text-purple-700">SAML
+                                        and SCIM</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="mb-6">
+                            <p class="text-xs font-semibold text-gray-500 mb-2">DATA DEFINITIONS</p>
+                            <ul class="space-y-1">
+                                <li><a href="#"
+                                        class="nav-link text-sm font-medium text-gray-700 hover:text-purple-700">Objects
+                                        and Fields</a></li>
+                                <li><a href="#"
+                                        class="nav-link text-sm font-medium text-gray-700 hover:text-purple-700">Data
+                                        Export</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="mb-6">
+                            <p class="text-xs font-semibold text-gray-500 mb-2">DATA MANAGEMENT</p>
+                            <ul class="space-y-1">
+                                <li><a href="#"
+                                        class="nav-link text-sm font-medium text-gray-700 hover:text-purple-700">Categories</a>
+                                </li>
+                                <li><a href="#"
+                                        class="nav-link text-sm font-medium text-gray-700 hover:text-purple-700">Lead
+                                        Statuses</a></li>
+                                <li><a href="#"
+                                        class="nav-link text-sm font-medium text-gray-700 hover:text-purple-700">Lead
+                                        Sources</a></li>
+                                <li><a href="#"
+                                        class="nav-link text-sm font-medium text-gray-700 hover:text-purple-700">Lead
+                                        Conversion</a></li>
+                                <li><a href="#"
+                                        class="nav-link text-sm font-medium text-gray-700 hover:text-purple-700">Opportunity
+                                        Conversion</a></li>
+                                <li><a href="#"
+                                        class="nav-link text-sm font-medium text-gray-700 hover:text-purple-700">Opportunity
+                                        States</a></li>
+                                <li><a href="#"
+                                        class="nav-link text-sm font-medium text-gray-700 hover:text-purple-700">Pipelines</a>
+                                </li>
+                                <li><a href="#"
+                                        class="nav-link text-sm font-medium text-gray-700 hover:text-purple-700">Document
+                                        Templates</a></li>
+                                <li><a href="#"
+                                        class="nav-link text-sm font-medium text-gray-700 hover:text-purple-700">Relationships</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="mb-6">
+                            <p class="text-xs font-semibold text-gray-500 mb-2">AUTOMATION</p>
+                            <ul class="space-y-1">
+                                <li><a href="#"
+                                        class="nav-link text-sm font-medium text-gray-700 hover:text-purple-700">Workflow
+                                        Automation</a></li>
+                                <li><a href="#"
+                                        class="nav-link text-sm font-medium text-gray-700 hover:text-purple-700">Lambda
+                                        Functions</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Right Panel Tabs -->
+                    <div class="right-panel flex-1 p-6">
+                        <div class="border-b border-gray-200 mb-4">
+                            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" role="tablist">
+                                <li class="me-2" role="presentation">
+                                  <button class="nav-link inline-block p-4 rounded-t-lg" data-bs-toggle="tab" data-bs-target="#general">
+  General
+</button>
+                                </li>
+                                <li class="me-2" role="presentation">
+                                    <button class="nav-link inline-block p-4 border-b-2 rounded-t-lg" id="profile-tab"
+                                        type="button" role="tab" data-bs-toggle="tab"
+                                        data-bs-target="#profile">Profile</button>
+                                </li>
+                                <li class="me-2" role="presentation">
+                                    <button class="nav-link inline-block p-4 border-b-2 rounded-t-lg"
+                                        id="notifications-tab" type="button" role="tab" data-bs-toggle="tab"
+                                        data-bs-target="#notifications">Notifications</button>
+                                </li>
+                                <li class="me-2" role="presentation">
+                                    <button class="nav-link inline-block p-4 border-b-2 rounded-t-lg" id="security-tab"
+                                        type="button" role="tab" data-bs-toggle="tab"
+                                        data-bs-target="#security">Security</button>
+                                </li>
+                                <li role="presentation">
+                                    <button class="nav-link inline-block p-4 border-b-2 rounded-t-lg"
+                                        id="integrations-tab" type="button" role="tab" data-bs-toggle="tab"
+                                        data-bs-target="#integrations">Integrations</button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="settingsTabsContent" class="tab-content">
+                            <div class="tab-pane block" id="general" role="tabpanel">
+                                <div class="w-full max-w-lg bg-white p-8 rounded-2xl shadow-md">
+                                    <h2 class="text-2xl font-semibold mb-6 text-gray-800">Custom Form</h2>
+
+                                    <form class="space-y-6">
+
+                                        <!-- Single Input Field -->
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Your
+                                                Name</label>
+                                            <input type="text" placeholder="Enter your name"
+                                                class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                                        </div>
+
+                                        <!-- Two Fields in One Row -->
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div>
+                                                <label
+                                                    class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                                <input type="email" placeholder="your@email.com"
+                                                    class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                                            </div>
+                                            <div>
+                                                <label
+                                                    class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                                                <input type="tel" placeholder="01xxxxxxxxx"
+                                                    class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                                            </div>
+                                        </div>
+
+                                        <!-- Select Dropdown -->
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Choose
+                                                Category</label>
+                                            <select
+                                                class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                                <option value="">Select an option</option>
+                                                <option value="tech">Technology</option>
+                                                <option value="edu">Education</option>
+                                                <option value="health">Healthcare</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Datetime Input -->
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Select Date &
+                                                Time</label>
+                                            <input type="datetime-local"
+                                                class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                                        </div>
+
+                                        <!-- Radio Buttons -->
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Choose
+                                                Status</label>
+                                            <div class="flex items-center space-x-6">
+                                                <label class="inline-flex items-center">
+                                                    <input type="radio" name="status" value="active"
+                                                        class="text-blue-600 focus:ring-blue-500" />
+                                                    <span class="ml-2 text-gray-700">Active</span>
+                                                </label>
+                                                <label class="inline-flex items-center">
+                                                    <input type="radio" name="status" value="inactive"
+                                                        class="text-blue-600 focus:ring-blue-500" />
+                                                    <span class="ml-2 text-gray-700">Inactive</span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <!-- Textarea -->
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Additional
+                                                Notes</label>
+                                            <textarea rows="4"
+                                                class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                placeholder="Write your message..."></textarea>
+                                        </div>
+
+                                        <!-- Submit Button -->
+                                        <div>
+                                            <button type="submit"
+                                                class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">Submit</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                                </div>
+                                <div class="tab-pane hidden" id="profile" role="tabpanel">Profile settings content</div>
+                                <div class="tab-pane hidden" id="notifications" role="tabpanel">Notification settings
+                                    content</div>
+                                <div class="tab-pane hidden" id="security" role="tabpanel">Security settings content
+                                </div>
+                                <div class="tab-pane hidden" id="integrations" role="tabpanel">Integrations settings
+                                    content</div>
+                            </div>
+                        </div>
+                    </div>
+            </main>
+        </div>
+
+        <!-- Scripts -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+        <script src="chart.js"></script>
+        <script>
+            const toggleButton = document.getElementById('toggleSidebar');
+            const sidebar = document.getElementById('sidebar');
+            const main = document.getElementById('main');
+
+            toggleButton.addEventListener('click', () => {
+                // Toggle sidebar width
+                sidebar.classList.toggle('w-44');
+                sidebar.classList.toggle('w-14');
+
+                // Toggle main margin
+                main.classList.toggle('ml-44');
+                main.classList.toggle('ml-14');
+
+                // Toggle link text visibility
+                document.querySelectorAll('.link-text').forEach(el => {
+                    el.classList.toggle('hidden');
+                });
+            });
+
+            let savedColor = localStorage.getItem("headerColor");
+            if (savedColor) {
+                $('#header').css('background', savedColor);
+            }
+
+            $('.theme-buttons').on('click', function () {
+                let color = $(this).data('color');
+                $('#header').css('background', color);
+                localStorage.setItem("headerColor", color);
+            });
+
+            window.switcher = function () {
+                $('#mode_switcher').toggle();
+            };
+        </script>
+        <script>
+
+            $(document).on("click", ".left-panel .nav-link", function (e) {
+                e.preventDefault();
+                $(".left-panel .nav-link").removeClass("active text-purple-700");
+                $(this).addClass("active text-purple-700");
+            });
+            function resizeSelect(sel) {
+                const tmp = document.createElement("span");
+                tmp.style.visibility = "hidden";
+                tmp.style.position = "absolute";
+                tmp.style.whiteSpace = "nowrap";
+                tmp.innerText = sel.options[sel.selectedIndex].text;
+                document.body.appendChild(tmp);
+                sel.style.width = tmp.offsetWidth + 35 + "px"; // +35 for dropdown arrow
+                tmp.remove();
+            }
+            window.addEventListener("DOMContentLoaded", function () {
+                const sel = document.querySelector("select");
+                if (sel) resizeSelect(sel);
+            });
+            window.addEventListener("DOMContentLoaded", () => {
+  // Simulate default click if needed
+  const defaultTab = document.querySelector('[data-bs-target="#general"]');
+  if (defaultTab) defaultTab.click();
+});
+            // Tab switch logic
+            document.querySelectorAll('[data-bs-toggle="tab"]').forEach(tab => {
+                tab.addEventListener('click', function () {
+                    const target = this.getAttribute('data-bs-target');
+
+                    // Hide all tab content panes
+                    document.querySelectorAll('.tab-pane').forEach(pane => {
+                        pane.classList.add('hidden');
+                        pane.classList.remove('block');
+                    });
+
+                    // Show selected tab pane
+                    document.querySelector(target).classList.remove('hidden');
+                    document.querySelector(target).classList.add('block');
+
+                    // Reset all tab buttons
+                    document.querySelectorAll('[data-bs-toggle="tab"]').forEach(btn => {
+                        btn.classList.remove('active', 'text-blue-600', 'border-blue-600', 'border-b-2');
+                    });
+
+                    // Activate current tab button with styles
+                    this.classList.add('active', 'text-blue-600', 'border-blue-600', 'border-b-2');
+                });
+            });
+
+            const profileToggle = document.getElementById("profileToggle");
+            const profileDropdown = document.getElementById("profileDropdown");
+
+            profileToggle.addEventListener("click", (e) => {
+                e.preventDefault();
+                profileDropdown.classList.toggle("hidden");
+            });
+
+            // Optional: Hide dropdown when clicking outside
+            document.addEventListener("click", (e) => {
+                const menu = document.getElementById("profileMenu");
+                if (!menu.contains(e.target)) {
+                    profileDropdown.classList.add("hidden");
+                }
+            });
+
+        </script>
+</body>
+
+</html>

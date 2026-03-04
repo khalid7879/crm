@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Insightly Sign Up</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      display: grid;
+      grid-template-columns: 35% 65%;
+    }
+
+    .text-orange {
+      color: navy;
+    }
+
+    .btn-orange {
+      background: linear-gradient(to left, rgb(236, 30, 37), rgb(215, 111, 114), rgb(99, 92, 177), rgb(92, 50, 165));
+      color: white;
+    }
+
+    .btn-orange:hover {
+      color: white;
+    }
+    .form-control{
+        box-shadow: none !important;
+        border: 1px dashed grey;
+    }
+    .companies .btn{
+        display: grid;
+        grid-template-columns: 50px 1fr;
+        /* justify-content: space-between; */
+        align-items: center;
+        justify-content: center;
+        color: grey;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        border: none;
+        padding: 10px 10px;
+    }
+    .companies .btn:hover{
+        color: #fff;
+    }
+   
+    /* .companies img{
+        width: px;
+    } */
+.image {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  background: url('dashboard.png') no-repeat center center / cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay-dark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* adjust the 0.5 for more or less darkness */
+  z-index: 1;
+}
+
+.overlay-card {
+  position: relative;
+  z-index: 2;
+  max-width: 400px;
+  width: 90%;
+  background-color: white;
+  padding: 30px;
+  border-radius: 1rem;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  text-align: center;
+}
+.policy{
+    font-size: 10px;
+    font-weight: bold;
+}
+  </style>
+</head>
+<body class="bg-light">
+  <div class="vh-100 d-flex align-items-center justify-content-center">
+    <div class="card  shadow-lg rounded-4" style="max-width: 400px; width: 100%; padding: 60px 30px;">
+      <div class="text-center mb-4">
+        <h2 class="text-orange fw-bold">iHelpBD</h2>
+        <!-- <small class="text-muted">BY UNBOUNCE</small> -->
+      </div>
+
+      <h6 class="text-center mb-3">Sign up to continue</h6>
+
+      <div class="d-grid companies gap-4 mb-3">
+        <button class="btn btn-outline-dark">
+          <img src="https://img.icons8.com/color/16/000000/google-logo.png"/><small>Sign up with Google</small> 
+        </button>
+        <button class="btn btn-outline-dark">
+          <img src="https://img.icons8.com/color/16/000000/microsoft.png"/> <small>Sign up with Microsoft</small> 
+        </button>
+      </div>
+
+      <div class="text-center my-2 text-muted">OR</div>
+
+      <form>
+        <div class="mb-3">
+          <input type="email" class="form-control" placeholder="Enter your email" required />
+        </div>
+        <p class="small text-muted policy">
+          By signing up, I accept the Insightly <a href="#" style="color: navy;">Terms of Service</a> and acknowledge the <a href="#" style="color: navy;">Privacy Policy</a>.
+        </p>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-orange rounded-pill">Sign Up</button>
+        </div>
+      </form>
+
+      <div class="text-center text-muted mt-3 fw-bold">
+        <small>Already have an iHelpBD account? <a href="#" style="color: navy;">Log in</a></small>
+      </div>
+    </div>
+  </div>
+
+  <div class="image">
+    <div class="overlay-dark"></div>
+    <div class="overlay-card">
+      <h5 class="fw-bold text-orange">Welcome to Sanda CRM</h5>
+      <p class="text-muted small">Helping you manage your business smarter with CRM.</p>
+    </div>
+  </div>
+</body>
+</html>

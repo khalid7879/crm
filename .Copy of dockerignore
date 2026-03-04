@@ -1,0 +1,74 @@
+
+# -------------------------------
+# Git & VCS
+# -------------------------------
+.git
+.gitignore
+.gitattributes
+.github
+
+# -------------------------------
+# Environment / Secrets
+# -------------------------------
+.env
+.env.*
+!.env.example
+
+# -------------------------------
+# Node / Frontend
+# -------------------------------
+node_modules
+npm-debug.log
+yarn-error.log
+.vite
+dist
+build
+
+# -------------------------------
+# Composer (handled in builder stage)
+# -------------------------------
+vendor
+
+# -------------------------------
+# Tests & Dev Tools
+# -------------------------------
+tests
+phpunit.xml
+.editorconfig
+.rnd
+
+# -------------------------------
+# Local DB dumps & backups
+# -------------------------------
+*.sql
+backup.sql
+all_crm_databases.sql
+
+# -------------------------------
+# Logs & Cache
+# -------------------------------
+
+# -------------------------------
+# Docker / CI files not needed in image
+# -------------------------------
+docker-compose*.yml
+Dockerfile*
+docker-compose_run.yml
+docker-compose_mul_bc.yml
+docker-compose1.yml
+Dockerfile_bc
+Dockerfile_mul
+
+# -------------------------------
+# OS / Editor junk
+# -------------------------------
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# -------------------------------
+# Docs & misc
+# -------------------------------
+README.md
+

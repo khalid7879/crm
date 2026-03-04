@@ -1,0 +1,358 @@
+export const useLeadFormInputs = ({
+    data,
+    errors,
+    setData,
+    sources,
+    route,
+    routeNames,
+    tenant,
+    handleSubmit,
+    processing,
+    handleReset,
+}) => [
+    {
+        parentSection: {
+            title: "Lead information",
+            showActionBtns: true,
+            submitBtnActionLink: route(routeNames.leadsCreate, tenant),
+            goBackLink: route(routeNames.leadsList, tenant),
+            handleSubmit,
+            processing,
+            handleReset,
+        },
+        childGridClass:
+            "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 3xl:grid-cols-6 gap-x-4 gap-y-1",
+        childItems: [
+            {
+                componentType: "TwGeneralFormSelect",
+                icon: "salutation",
+                info: "Salutations mr or mrs",
+                options: sources.dataSalutations.list,
+                defaultOptText: "Select salutations",
+                value: data.salutation,
+                onChange: (val) => setData("salutation", val),
+                error: errors.salutation,
+            },
+            {
+                componentType: "TwGeneralFormInput",
+                icon: "nameNick",
+                info: "Nickname",
+                required: true,
+                value: data.nickname,
+                onChange: (e) => setData("nickname", e.target.value),
+                error: errors.nickname,
+            },
+            {
+                componentType: "TwGeneralFormInput",
+                icon: "nameFirst",
+                info: "First name",
+                value: data.first_name,
+                onChange: (e) => setData("first_name", e.target.value),
+                error: errors.first_name,
+            },
+            {
+                componentType: "TwGeneralFormInput",
+                icon: "nameLast",
+                info: "Last name",
+                value: data.last_name,
+                onChange: (e) => setData("last_name", e.target.value),
+                error: errors.last_name,
+            },
+
+            {
+                componentType: "TwGeneralFormSelect",
+                icon: "designation",
+                info: "Title or designation",
+                options: sources.dataDesignations,
+                defaultOptText: "Select designation",
+                value: data.data_designation_id,
+                onChange: (val) => setData("data_designation_id", val),
+                error: errors.data_designation_id,
+            },
+            {
+                componentType: "TwGeneralFormSelect",
+                icon: "stage",
+                info: "Lead status",
+                required: true,
+                options: sources.dataStages?.inForm,
+                defaultOptText: "Select status",
+                value: data.stage_id,
+                onChange: (val) => setData("stage_id", val),
+                error: errors.stage_id,
+                readOnly: sources.dataStages?.isReadOnly,
+            },
+            {
+                componentType: "TwGeneralFormSelect",
+                icon: "priority",
+                info: "Lead priority",
+                options: sources.dataPriorities.list,
+                defaultOptText: "Select lead priority",
+                value: data.data_priority_id,
+                onChange: (val) => setData("data_priority_id", val),
+                error: errors.data_priority_id,
+            },
+        ],
+    },
+
+    {
+        parentSection: {
+            title: "Contact information",
+            classList: "pt-6",
+        },
+        childGridClass:
+            "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-8 gap-x-4 gap-y-1",
+        childItems: [
+            {
+                componentType: "TwGeneralFormDatalist",
+                info: "Organization",
+                icon: "organization",
+                value: data.organization,
+                onChange: (e) => setData("organization", e.target.value),
+                error: errors.organization,
+                options: sources.organizations,
+            },
+            {
+                componentType: "TwGeneralFormInput",
+                info: "Email address",
+                icon: "email",
+                type: "email",
+                value: data.email,
+                onChange: (e) => setData("email", e.target.value),
+                error: errors.email,
+            },
+            {
+                componentType: "TwGeneralFormInput",
+                info: "Telephone number",
+                icon: "telephone",
+                type: "text",
+                value: data.telephone,
+                onChange: (e) => setData("telephone", e.target.value),
+                error: errors.telephone,
+            },
+            {
+                componentType: "TwGeneralFormInput",
+                info: "Mobile number",
+                icon: "mobile",
+                type: "text",
+                value: data.mobile_phone,
+                onChange: (e) => setData("mobile_phone", e.target.value),
+                error: errors.mobile_phone,
+            },
+            {
+                componentType: "TwGeneralFormInput",
+                info: "Alternative mobile number",
+                icon: "mobile",
+                type: "text",
+                value: data.alt_mobile_phone,
+                onChange: (e) => setData("alt_mobile_phone", e.target.value),
+                error: errors.alt_mobile_phone,
+            },
+            {
+                componentType: "TwGeneralFormInput",
+                info: "Fax",
+                type: "text",
+                icon: "fax",
+                value: data.fax,
+                onChange: (e) => setData("fax", e.target.value),
+                error: errors.fax,
+            },
+            {
+                componentType: "TwGeneralFormInput",
+                info: "Company website(https://www.example.com)",
+                icon: "website",
+                type: "url",
+                value: data.website,
+                onChange: (e) => setData("website", e.target.value),
+                error: errors.website,
+            },
+            {
+                componentType: "TwGeneralFormSelect",
+                icon: "contactMethod",
+                info: "Preferred contact method",
+                options: sources.dataContactMethods.list,
+                defaultOptText: "Select contact method",
+                value: data.preferred_contact_method,
+                onChange: (val) => setData("preferred_contact_method", val),
+                error: errors.preferred_contact_method,
+                defaultOptionDisabled: false,
+            },
+            {
+                componentType: "TwGeneralFormSelect",
+                icon: "time",
+                info: "Preferred contact time",
+                options: sources.dataContactTimes.list,
+                defaultOptText: "Select preferable time",
+                value: data.preferred_contact_time,
+                onChange: (val) => setData("preferred_contact_time", val),
+                error: errors.preferred_contact_method,
+            },
+            ...(data.social_links
+                ? Object.entries(data.social_links).map(([id, item]) => ({
+                      componentType: "TwGeneralFormInput",
+                      info: item.name,
+                      icon: item.icon || "link",
+                      type: "url",
+                      value: item.value,
+                      error:
+                          errors?.social_links?.[id]?.value ||
+                          errors?.[`social_links.${id}.value`] ||
+                          "",
+                      onChange: (e) =>
+                          setData("social_links", {
+                              ...data.social_links,
+                              [id]: {
+                                  ...item,
+                                  value: e.target.value,
+                              },
+                          }),
+                  }))
+                : []),
+        ],
+    },
+
+    {
+        parentSection: {
+            title: "Additional information",
+            classList: "pt-6",
+        },
+        childGridClass:
+            "grid grid-cols-1 md:grid-cols-4 2xl:grid-cols-8 gap-x-4 gap-y-1",
+        childItems: [
+            {
+                componentType: "TwGeneralFormTextarea",
+                info: "Lead details",
+                icon: "edit",
+                classColSpan: "col-span-full",
+                value: data.details,
+                onChange: (e) => setData("details", e.target.value),
+                error: errors.details,
+            },
+            {
+                componentType: "TwGeneralFormSelect",
+                info: "Lead rating",
+                icon: "rating",
+                options: sources.dataRatings,
+                classColSpan: "col-span-full lg:col-span-1 md:col-span-2",
+                defaultOptText: "Select rating",
+                value: data.data_rating_id,
+                onChange: (val) => setData("data_rating_id", val),
+                error: errors.data_rating_id,
+            },
+            {
+                componentType: "TwGeneralFormSelect",
+                info: "Number of employees",
+                icon: "users4",
+                options: sources.dataEmpSizes.list,
+                classColSpan: "col-span-full lg:col-span-1 md:col-span-2",
+                defaultOptText: "Select employee count",
+                value: data.employees_count,
+                onChange: (val) => setData("employees_count", val),
+                error: errors.employees_count,
+            },
+            {
+                componentType: "TwGeneralFormSelect",
+                info: "Industry type",
+                icon: "industry",
+                options: sources.dataCategories.list,
+                defaultOptText: "Select industry type",
+                value: data.data_category_id,
+                onChange: (val) => setData("data_category_id", val),
+                error: errors.data_category_id,
+                classColSpan: "col-span-full lg:col-span-1 md:col-span-2",
+            },
+            {
+                componentType: "TwGeneralFormSelect",
+                required: true,
+                info: "Lead source",
+                icon: "source",
+                options: sources.dataSources.list,
+                defaultOptText: "Select lead source",
+                value: data.data_source_id,
+                onChange: (val) => setData("data_source_id", val),
+                error: errors.data_source_id,
+                classColSpan: "col-span-full lg:col-span-1 md:col-span-2",
+            },
+            {
+                componentType: "RsCreatableComponent",
+                classColSpan: "col-span-full",
+                info: "Lead tags",
+                value: data.tags.map((tag) => ({ label: tag, value: tag })),
+                onChange: (selectedOptions) => {
+                    const tags = selectedOptions
+                        ? selectedOptions.map((opt) => opt.value)
+                        : [];
+                    setData("tags", tags);
+                },
+            },
+        ],
+    },
+
+    {
+        parentSection: {
+            title: "Permissions",
+            classList: "pt-6",
+        },
+        childGridClass:
+            "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-8 gap-x-4 gap-y-3",
+        childItems: [
+            {
+                componentType: "TwGeneralFormSelect",
+                icon: "usersOwner",
+                info: "Lead owner",
+                options: sources.tenantUsers.list,
+                required: true,
+                value: data.owner_id,
+                onChange: (val) => setData("owner_id", val),
+                error: errors.owner_id,
+                classColSpan: "col-span-full md:col-span-1",
+            },
+            {
+                componentType: "TwGeneralFormRadioGroup",
+                name: "is_active",
+                legend: "Visibility",
+                required: false,
+                value: `${data.is_active}`,
+                onChange: (val) => setData("is_active", val),
+                options: [
+                    { label: "Active", value: "1" },
+                    { label: "Inactive", value: "0" },
+                ],
+                error: errors.is_active,
+                icon: "view",
+                classColSpan: "col-span-full md:col-span-1",
+            },
+            {
+                componentType: "TwGeneralFormRadioGroup",
+                legend: "Lead associates",
+                required: false,
+                defaultValue: "all",
+                value: data.associateType,
+                onChange: (val) => setData("associateType", val),
+                options: [
+                    { label: "All", value: "all" },
+                    { label: "Select individuals", value: "selected" },
+                ],
+                error: errors.associateType,
+                direction: "row",
+                icon: "users3",
+                classColSpan: "col-span-full md:col-span-2",
+            },
+            {
+                componentType: "RsSelectableComponent",
+                options: sources.userOptions,
+                value: sources.userOptions.filter((opt) =>
+                    (data.associates ?? []).includes(opt.value)
+                ),
+                onChange: (selected) =>
+                    setData(
+                        "associates",
+                        selected ? selected.map((item) => item.value) : []
+                    ),
+                info: "Select associates",
+                required: true,
+                icon: "users3",
+                classColSpan: "col-span-full",
+            },
+        ],
+    },
+];

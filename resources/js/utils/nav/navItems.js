@@ -1,0 +1,228 @@
+export function navItems(userPermissions = []) {
+    const allowedPermissions = userPermissions.map((perm) =>
+        perm.toLowerCase()
+    );
+
+    return [
+        {
+            icon: "",
+            label: "User management",
+            isParent: true,
+            link: "",
+            permission: "",
+            permissions: [
+                "modules-list",
+                "permissions-list",
+                "roles-list",
+                "departments-list",
+                "users-list",
+            ],
+        },
+
+        {
+            icon: "modules",
+            label: "Modules",
+            isParent: false,
+            link: "tenant.modules.index",
+            permission: "modules-list",
+            permissions: [],
+        },
+        {
+            icon: "key",
+            label: "Permissions",
+            isParent: false,
+            link: "tenant.permissions.index",
+            permission: "permissions-list",
+            permissions: [],
+        },
+        {
+            icon: "roles",
+            label: "Roles",
+            isParent: false,
+            link: "tenant.roles.index",
+            permission: "roles-list",
+            permissions: [],
+        },
+
+        {
+            icon: "departments",
+            label: "Departments",
+            isParent: false,
+            link: "tenant.departments.index",
+            permission: "departments-list",
+            permissions: [],
+        },
+        {
+            icon: "users",
+            label: "Users",
+            isParent: false,
+            link: "tenant.users.index",
+            permission: "users-list",
+            permissions: [],
+        },
+        {
+            icon: "database",
+            label: "Data management",
+            isParent: true,
+            link: "",
+            permission: "",
+            permissions: [
+                "products-list",
+                "industry-types-list",
+                "lead-sources-list",
+                "stages-list",
+                "lead-priorities-list",
+                "lead-ratings-list",
+                "data-designations-list",
+                "social-links-list",
+                "data-contact-times-list",
+                "data-emp-sizes-list",
+                "data-revenue-list",
+            ],
+        },
+        {
+            icon: "industry",
+            label: "Category",
+            isParent: false,
+            link: "tenant.industryTypes.index",
+            permission: "industry-types-list",
+            permissions: [],
+        },
+         {
+            icon: "product",
+            label: "Products",
+            isParent: false,
+            link: "tenant.products.index",
+            permission: "products-list",
+            permissions: [],
+        },
+        {
+            icon: "source",
+            label: "Source",
+            isParent: false,
+            link: "tenant.lead-sources.index",
+            permission: "lead-sources-list",
+            permissions: [],
+        },
+        {
+            icon: "stage",
+            label: "Stage",
+            isParent: false,
+            link: "tenant.stages.index",
+            permission: "stages-list",
+            permissions: [],
+        },
+        {
+            icon: "priority",
+            label: "Priority",
+            isParent: false,
+            link: "tenant.lead-priorities.index",
+            permission: "lead-priorities-list",
+            permissions: [],
+        },
+        {
+            icon: "designation",
+            label: "Designations",
+            isParent: false,
+            link: "tenant.data-designations.index",
+            permission: "data-designations-list",
+            permissions: [],
+        },
+        {
+            icon: "rating",
+            label: "Rating",
+            isParent: false,
+            link: "tenant.lead-ratings.index",
+            permission: "lead-ratings-list",
+            permissions: [],
+        },
+        {
+            icon: "social",
+            label: "Social links",
+            isParent: false,
+            link: "tenant.social-links.index",
+            permission: "social-links-list",
+            permissions: [],
+        },
+        {
+            icon: "time",
+            label: "Contact times",
+            isParent: false,
+            link: "tenant.contact-times.index",
+            permission: "data-contact-times-list",
+            permissions: [],
+        },
+        {
+            icon: "man",
+            label: "Employee size",
+            isParent: false,
+            link: "tenant.emp-sizes.index",
+            permission: "data-emp-sizes-list",
+            permissions: [],
+        },
+        {
+            icon: "money",
+            label: "Revenue type",
+            isParent: false,
+            link: "tenant.data-revenue.index",
+            permission: "data-revenue-list",
+            permissions: [],
+        },
+        {
+            icon: "",
+            label: "Notification Setting",
+            isParent: true,
+            link: "",
+            permission: "",
+            permissions: ["notification-settings-list"],
+        },
+        {
+            icon: "notification",
+            label: "Notification",
+            isParent: false,
+            link: "tenant.notification-settings.index",
+            permission: "notification-settings-list",
+            permissions: [],
+        },
+        {
+            icon: "",
+            label: "Company Setting",
+            isParent: true,
+            link: "",
+            permission: "",
+            permissions: ["company-settings-list"],
+        },
+        {
+            icon: "organization",
+            label: "Company",
+            isParent: false,
+            link: "tenant.company-settings.index",
+            permission: "company-settings-list",
+            permissions: [],
+        },
+         {
+            icon: "",
+            label: "Email Setting",
+            isParent: true,
+            link: "",
+            permission: "",
+            permissions: ["email-settings-list"],
+        },
+        {
+            icon: "email",
+            label: "Email",
+            isParent: false,
+            link: "tenant.email-setting.index",
+            permission: "email-settings-list",
+            permissions: [],
+        },
+    ].filter((item) => {
+        if (item.isParent) {
+            return item.permissions.every((perm) =>
+                allowedPermissions.includes(perm)
+            );
+        } else {
+            return allowedPermissions.includes(item.permission);
+        }
+    });
+}

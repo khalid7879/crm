@@ -1,0 +1,17 @@
+#main {
+    /* margin-left: 170px; */
+    transition: all 0.3s ease;
+    overflow-y: auto;
+    max-height: 90vh;
+    /* border: 1px solid #ddd; */
+}
+
+.collapsed {
+  width: 56px !important; /* Tailwind w-14 size */
+}
+#sidebar.collapsed .link-text {
+  display: none;
+}
+  .nav-link.active {
+    @apply text-blue-600 border-blue-600;
+  }

@@ -1,0 +1,56 @@
+name: 🚀 Deploy to PROD Server
+
+on:
+  push:
+    branches:
+      - prod # Change this if you're using a different branch
+
+jobs:
+  deploy:
+    name: Deploy App to CentOS via SSH
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up SSH Connection
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -p 54658 -H 114.130.69.200 >> ~/.ssh/known_hosts
+
+      - name: Deploy to Server
+        run: |
+          ssh -i ~/.ssh/id_ed25519 -p 54658 root@114.130.69.200 << 'EOF'
+            echo "Connected to CentOS server"
+
+            # Navigate to your project directory
+
+            cd /var/www/html
+
+            # If folder doesn't exist, clone it fresh (use your actual repo)
+
+            if [ ! -d "saas-crm-ihelp/.git" ]; then
+              rm -rf saas-crm-ihelp
+              git clone -b prod git@github.com:mistersakil/ihelp-sass-crm-20250504.git saas-crm-ihelp
+            else
+              cd saas-crm-ihelp
+              git pull origin prod
+            fi
+
+            cd saas-crm-ihelp
+
+            # Pull latest changes from GitHub
+            git pull origin prod
+
+            # Optional: Add your build/deploy steps below
+            # npm install
+            # npm run build
+            # composer install --optimize-autoloader
+            # php artisan migrate --force
+            # systemctl restart nginx
+            # systemctl restart php-fpm
+
+            echo "Code deployed successful done"

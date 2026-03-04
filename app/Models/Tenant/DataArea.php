@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Models\Tenant;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
+
+class DataArea extends Model
+{
+    use HasFactory, Notifiable, HasUlids;
+
+    protected $fillable = [
+        'name',
+        'is_active',
+    ];
+}

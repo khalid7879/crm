@@ -1,0 +1,27 @@
+Commands and descriptions
+1.php artisan tenant:seed
+Dropping & re-creating the main database with a tenant.Seeding default data all tables.
+
+2.php artisan tenant:seed PROD
+Drops and re-creates the main tenant database and seeds default data excluding the users table.
+Creates a predefined Sales Executive user.
+Auto-created user:
+Email: sales@ihelpkl.com
+Name: Sales Executive
+Password: Sales2025#
+Role: Sales Executive
+
+3.php artisan tenant:Testing-seed lead-10 
+Drops and re-creates the main tenant database and seeds default data excluding a specific model, then generates testing data for the given model.
+Format:php artisan tenant:Testing-seed {model}-{count}
+Example:
+lead-10
+opportunity-5000
+organization-1000
+
+4.php artisan queue:work --queue=high,default
+Runs the Laravel queue worker with priority handling, processing the high queue before the default queue.
+
+
+########### QC/UAT TESTING ##########
+php artisan tenant:qc LEAD 2000000 (10 CONTACT, 2LAC LEAD, 10K OPPORTUNITY , 5K ORGANIZATION, 7K PROJECTS, 3LAC TASKS)

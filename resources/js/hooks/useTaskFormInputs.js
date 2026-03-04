@@ -1,0 +1,215 @@
+import {
+    makeInput,
+    makeSelect,
+    makeTextarea,
+    makeSection,
+    makeMultiSelect,
+    makeAsyncSelect,
+} from "@/utils/common/sectionAndFieldFactory";
+
+export const useTaskFormInputs = ({
+    data,
+    errors,
+    setData,
+    sources,
+    route,
+    handleOnSave,
+    processing,
+    handleReset,
+    handleSubmit,
+    showActionBtns=false,
+    handleAsyncCall = () => {},
+    relatedToTypeIsReadOnly = false,
+}) => {
+    
+    return [
+        /*** Task general information ***/
+        makeSection({
+            title: "Task general information",
+            actionProps: {
+                showActionBtns: showActionBtns,
+                submitBtnActionLink: route(
+                    sources.routeNames?.tasksCreate,
+                    sources.tenant
+                ),
+                goBackLink: route(sources.routeNames?.tasksList, sources.tenant),
+                handleOnSave,
+                handleSubmit,
+                processing,
+                handleReset,
+            },
+            childGridClass:
+                "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-6 gap-x-4 gap-y-1",
+            childItems: [
+                makeInput({
+                    field: "name",
+                    data,
+                    errors,
+                    setData,
+                    icon: "edit",
+                    info: "Task name",
+                    required: true,
+                    classColSpan: "col-span-full",
+                }),
+                makeTextarea({
+                    field: "details",
+                    data,
+                    errors,
+                    setData,
+                    info: "Task details",
+                }),
+                makeInput({
+                    field: "date_start",
+                    data,
+                    errors,
+                    setData,
+                    icon: "date",
+                    info: "Start date",
+                    type: "date",
+                    classColSpan: "col-span-full md:col-span-1",
+                }),
+                makeInput({
+                    field: "date_due",
+                    data,
+                    errors,
+                    setData,
+                    icon: "date",
+                    info: "Due date",
+                    type: "date",
+                    classColSpan: "col-span-full md:col-span-1",
+                }),
+                makeInput({
+                    field: "date_reminder",
+                    data,
+                    errors,
+                    setData,
+                    icon: "date",
+                    info: "Reminder date",
+                    type: "datetime-local",
+                    classColSpan: "col-span-full md:col-span-1",
+                }),
+            ],
+        }),
+
+        /*** Additional information ***/
+        makeSection({
+            title: "Additional information",
+            classList: "pt-6",
+            childGridClass:
+                "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 3xl:grid-cols-6 gap-x-4 gap-y-1",
+            childItems: [
+                makeSelect({
+                    field: "data_priority_id",
+                    data,
+                    errors,
+                    setData,
+                    icon: "priority",
+                    info: "Task priority",
+                    options: sources.dataPriorities?.list,
+                    defaultOptText: "Select task priority",
+                    classColSpan: "col-span-full md:col-span-1",
+                }),
+                makeSelect({
+                    field: "data_category_id",
+                    data,
+                    errors,
+                    setData,
+                    icon: "category",
+                    info: "Task category",
+                    options: sources.dataCategoriesForTasks?.list,
+                    defaultOptText: "Select category",
+                    classColSpan: "col-span-full md:col-span-1",
+                }),
+                makeSelect({
+                    field: "stage_id",
+                    data,
+                    errors,
+                    setData,
+                    icon: "stage",
+                    info: "Task status",
+                    required: true,
+                    options: sources.dataStagesForTask?.list,
+                    defaultOptText: "Select status",
+                    classColSpan: "col-span-full md:col-span-1",
+                    extraOnChange: (val) =>
+                        setData(
+                            "progress_percent",
+                            sources.dataStagesForTask.list[val].stage_percent
+                        ),
+                }),
+                makeInput({
+                    field: "progress_percent",
+                    data,
+                    errors,
+                    setData,
+                    icon: "percentBold",
+                    info: "Task progress in percent",
+                    type: "number",
+                    min: 0,
+                    max: 100,
+                    isReadOnly: true,
+                    classColSpan: "col-span-full md:col-span-1",
+                }),
+            ],
+        }),
+
+        /*** Permissions ***/
+        makeSection({
+            title: "Permissions",
+            classList: "pt-6",
+            childGridClass:
+                "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-6 gap-x-4 gap-y-1",
+            childItems: [
+                makeSelect({
+                    field: "owner_id",
+                    data,
+                    errors,
+                    setData,
+                    icon: "usersOwner",
+                    info: "Task owner",
+                    required: true,
+                    options: sources.tenantUsers?.list,
+                    classColSpan: "col-span-full md:col-span-1",
+                }),
+                makeSelect({
+                    field: "related_to_type",
+                    data,
+                    errors,
+                    setData,
+                    icon: "linkHome",
+                    info: "Task related to type",
+                    options: sources.dataRelatedTypes?.list,
+                    defaultOptText: "Select related to",
+                    classColSpan: "col-span-full md:col-span-1",
+                    extraOnChange: () => setData("taskable_id", null),
+                    defaultOptionDisabled: false,
+                    readOnly: relatedToTypeIsReadOnly,
+                    // readOnly: data.related_to_type != 'TASK' ? true : false,
+                }),
+                makeAsyncSelect({
+                    field: "taskable_id",
+                    data,
+                    errors,
+                    setData,
+                    handleAsyncCall,
+                    info: "Change task related type to active this",
+                    icon: "link3",
+                    classColSpan: "col-span-full md:col-span-1",
+                    name: "taskable_id",
+                    isDisabled: !Object.keys(sources.dataRelatedTypes?.list ?? {}).includes( data.related_to_type),
+                    isDisabled: relatedToTypeIsReadOnly,
+                }),
+                makeMultiSelect({
+                    field: "associates",
+                    data,
+                    errors,
+                    setData,
+                    options: sources.userOptions,
+                    info: "Select associates",
+                    icon: "users3",
+                    classColSpan: "col-span-full",
+                }),
+            ],
+        }),
+    ];
+};

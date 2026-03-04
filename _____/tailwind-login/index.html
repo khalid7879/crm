@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Signup Page</title>
+</head>
+<!-- <body class="sm:bg-gradient-to-r sm:from-gray-200 sm:to-yellow-200 md:flex md:items-center md:justify-center md:min-h-screen p-4"> -->
+    <body class="bg-gray-50 to-white sm:from-gray-200 sm:to-yellow-200 md:flex md:items-center md:justify-center md:min-h-screen p-4">
+
+<section class="md:bg-gradient-to-r md:from-gray-200 md:to-yellow-200 flex flex-col md:flex-row gap-6 rounded-2xl md:shadow-lg max-w-5xl w-full p-6 md:p-8">
+    
+    <!-- Left Section -->
+    <div class="w-full md:w-1/2 flex flex-col items-center">
+        <div class="crextio text-left md:w-full mb-6">
+        <button class="ml-5 mt-4 border border-gray-400 px-3 py-2 rounded-full" >Crextio</button>
+    </div>
+        <h2 class="font-bold text-3xl">Create Account</h2>
+        <p class="text-sm mt-2 text-gray-600">Signup and get 30 day free trial</p>
+        
+        <form action="#" class="flex flex-col gap-5 mt-6 w-full max-w-[300px]">
+            <!-- Full Name -->
+            <div class="flex flex-col gap-y-2">
+                <label for="fullname" class="text-gray-600 text-[12px] ml-2">Full Name</label>
+                <input type="text" class="py-2 px-3 rounded-full outline-0 bg-white border border-gray-300" name="name" placeholder="Full Name">
+            </div>
+            
+            <!-- Email -->
+            <div class="flex flex-col gap-y-2">
+                <label for="email" class="text-gray-600 text-[12px] ml-2">Email</label>
+                <input type="email" class="py-2 px-3 rounded-full outline-0 bg-white border border-gray-300" name="email" placeholder="Email">
+            </div>
+
+            <!-- Password -->
+            <div class="flex flex-col gap-y-2">
+                <label for="password" class="text-gray-600 text-[12px] ml-2">Password</label>
+                <div class="relative">
+                    <input id="password" type="password" name="password" placeholder="Password"
+                        class="py-2 px-3 w-full rounded-full outline-0 bg-white border border-gray-300">
+                    <button type="button" onclick="togglePassword()" class="absolute inset-y-0 right-3 flex items-center">
+                        <svg id="eyeOpen" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5 text-gray-500">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                d="M2.458 12C3.732 7.943 7.523 5 12 5s8.268 2.943 9.542 7c-1.274 4.057-5.065 7-9.542 7s-8.268-2.943-9.542-7z"/>
+                        </svg>
+                        <svg id="eyeClosed" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hidden w-5 h-5 text-gray-500">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7 .588-1.877 1.587-3.58 2.875-4.975m3.707-2.235A9.99 9.99 0 0112 5c4.477 0 8.268 2.943 9.542 7-.524 1.669-1.368 3.18-2.458 4.458M9.88 9.88a3 3 0 104.24 4.24"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                d="M3 3l18 18"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <button class="bg-yellow-400 text-white py-2 mt-2 rounded-full w-full text-lg font-medium hover:bg-yellow-500 transition">
+                Submit
+            </button>
+            
+            <div class="flex gap-3 justify-center mt-2">
+                <button class="border border-gray-400 px-5 py-2 rounded-full flex items-center gap-2 hover:bg-gray-100 transition">
+                    <img src="apple.png" class="w-5" alt="Apple">
+                    Apple
+                </button>
+                <button class="border border-gray-400 px-5 py-2 rounded-full flex items-center gap-2 hover:bg-gray-100 transition">
+                    <img src="google.png" class="w-5" alt="Google">
+                    Google
+                </button>
+            </div>
+        </form>
+        <div class="footer   w-full flex flex-col md:flex-row justify-between items-center mt-6 text-sm text-gray-600">
+            <p>Already have an account? <a href="#" class="text-blue-500 text-[12px] hover:underline">Sign in</a></p>
+            <a href="#" class="text-[12px]">Terms & Conditions</a>
+        </div>
+    </div>
+    <div class="w-full md:w-1/2 hidden md:block">
+        <img src="login.jpg" class="rounded-2xl object-cover w-full h-full" alt="Signup">
+    </div>
+</section>
+
+<script>
+function togglePassword() {
+        const passwordInput = document.getElementById("password");
+        const eyeOpen = document.getElementById("eyeOpen");
+        const eyeClosed = document.getElementById("eyeClosed");
+
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            eyeOpen.classList.add("hidden");
+            eyeClosed.classList.remove("hidden");
+        } else {
+            passwordInput.type = "password";
+            eyeOpen.classList.remove("hidden");
+            eyeClosed.classList.add("hidden");
+        }
+    }
+</script>
+
+</body>
+</html>

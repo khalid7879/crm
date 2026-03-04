@@ -1,0 +1,85 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+    container_name: saas_crm_ihelp_app
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      RUN_TENANT_SEED: "true"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - saas_crm_ihelp_network
+
+  webserver:
+    image: nginx:1.25-alpine
+    container_name: saas_crm_ihelp_webserver
+    restart: unless-stopped
+    ports:
+    - "80:80"
+    volumes:
+      - .:/var/www
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - app
+    networks:
+      - saas_crm_ihelp_network
+
+  db:
+    image: mysql:8.0-oraclelinux8
+    container_name: saas_crm_ihelp_db
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+    volumes:
+      - saas_crm_ihelp_db_data:/var/lib/mysql
+      - ./mysql-master/conf/my.cnf:/etc/mysql/conf.d/my.cnf
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - saas_crm_ihelp_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: saas_crm_ihelp_redis
+    restart: unless-stopped
+    networks:
+      - saas_crm_ihelp_network
+
+  phpmyadmin:
+    image: phpmyadmin:5.2
+    container_name: saas_crm_ihelp_phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+    ports:
+      - "8001:80"
+    depends_on:
+      - db
+    profiles:
+      - debug
+    networks:
+      - saas_crm_ihelp_network
+
+networks:
+  saas_crm_ihelp_network:
+    driver: bridge
+
+volumes:
+  saas_crm_ihelp_db_data:
+

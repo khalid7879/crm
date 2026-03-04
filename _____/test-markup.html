@@ -1,0 +1,116 @@
+            <div className="flex items-center gap-2 p-2 bg-base-100 border rounded-md shadow-sm">
+                {/* Search Input */}
+                <input
+                    type="text"
+                    placeholder="Search this list..."
+                    className="input input-sm input-bordered w-56"
+                />
+
+                {/* Refresh Button */}
+                <button className="btn btn-sm btn-ghost">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M4 4v5h.582M20 20v-5h-.581M5.27 5.27a9 9 0 0112.728 0M18.728 18.728a9 9 0 01-12.728 0"
+                        />
+                    </svg>
+                </button>
+
+                {/* Settings Dropdown */}
+                <div className="dropdown dropdown-hover">
+                    <button tabIndex={0} className="btn btn-sm btn-ghost">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M12 6v6l4 2"
+                            />
+                        </svg>
+                    </button>
+                    <ul
+                        tabIndex={0}
+                        className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+                    >
+                        <li>
+                            <a>Option 1</a>
+                        </li>
+                        <li>
+                            <a>Option 2</a>
+                        </li>
+                    </ul>
+                </div>
+
+                {/* Grid View Icon */}
+                <button className="btn btn-sm btn-ghost">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M4 6h4v4H4V6zm6 0h4v4h-4V6zm6 0h4v4h-4V6zM4 14h4v4H4v-4zm6 0h4v4h-4v-4zm6 0h4v4h-4v-4z"
+                        />
+                    </svg>
+                </button>
+
+                {/* Filter Button */}
+                <button className="btn btn-sm btn-ghost">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L15 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 019 21v-7.586L3.293 6.707A1 1 0 013 6V4z"
+                        />
+                    </svg>
+                </button>
+
+                {/* List View Icon */}
+                <button className="btn btn-sm btn-ghost">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M4 6h16M4 10h16M4 14h16M4 18h16"
+                        />
+                    </svg>
+                </button>
+
+                {/* New Lead Button */}
+                <button className="btn btn-sm btn-error text-white">
+                    New Lead
+                </button>
+            </div>
