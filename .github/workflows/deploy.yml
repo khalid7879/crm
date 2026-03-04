@@ -48,10 +48,10 @@ jobs:
             #  Rebuild & restart only the app container
             #  (fastest option if docker-compose supports it)
             # ────────────────────────────────────────────────
-            docker compose build --no-cache app
-            docker compose up -d --force-recreate --no-deps app
+            docker-compose build --no-cache app
+            docker-compose up -d --force-recreate --no-deps app
 
             # Optional: also restart webserver if you changed nginx config
-            # docker compose up -d --force-recreate --no-deps webserver
+            # docker-compose up -d --force-recreate --no-deps webserver
 
             echo "🎉 Deployment completed successfully!"
