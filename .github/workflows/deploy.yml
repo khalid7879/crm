@@ -3,7 +3,7 @@ name: 🚀 Deploy to PROD Server
 on:
   push:
     branches:
-      - prod # Change this if you're using a different branch
+      - main # Change this if you're using a different branch
 
 jobs:
   deploy:
@@ -17,13 +17,14 @@ jobs:
       - name: Set up SSH Connection
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -p 54658 -H 114.130.69.200 >> ~/.ssh/known_hosts
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519_249 
+        
+          chmod 600 ~/.ssh/id_ed25519_249
+          ssh-keyscan -p 6072 -H 114.130.69.249 >> ~/.ssh/known_hosts
 
       - name: Deploy to Server
         run: |
-          ssh -i ~/.ssh/id_ed25519 -p 54658 root@114.130.69.200 << 'EOF'
+          ssh -i ~/.ssh/id_ed25519_249 -p 6072 root@114.130.69.249<< 'EOF'
             echo "Connected to CentOS server"
 
             # Navigate to your project directory
@@ -32,18 +33,18 @@ jobs:
 
             # If folder doesn't exist, clone it fresh (use your actual repo)
 
-            if [ ! -d "saas-crm-ihelp/.git" ]; then
-              rm -rf saas-crm-ihelp
-              git clone -b prod git@github.com:mistersakil/ihelp-sass-crm-20250504.git saas-crm-ihelp
+            if [ ! -d "crm/.git" ]; then
+              rm -rf crm
+              git clone -b main git@github.com:khalid7879/crm.git crm
             else
-              cd saas-crm-ihelp
-              git pull origin prod
+              cd crm
+              git pull origin main  
             fi
 
-            cd saas-crm-ihelp
+            cd crm
 
             # Pull latest changes from GitHub
-            git pull origin prod
+            git pull origin main
 
             # Optional: Add your build/deploy steps below
             # npm install
