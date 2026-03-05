@@ -1,58 +1,74 @@
-name: 🚀 Deploy to PROD Server
+name: 🚀 Build & Deploy CRM
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+
+env:
+  IMAGE_NAME: crm
 
 jobs:
-  deploy:
+
+# -------------------------------------------------
+# 1️⃣ Build Docker Image
+# -------------------------------------------------
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Deploy via SSH
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker Image
+        run: |
+          docker build -t $IMAGE_NAME:latest .
+
+      - name: Push Image to Docker Hub
+        run: |
+          docker push $IMAGE_NAME:latest
+
+
+# -------------------------------------------------
+# 2️⃣ Deploy to Production Server
+# -------------------------------------------------
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Deploy to Server
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: 114.130.69.249
           port: 6072
           username: root
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+
           script: |
-            echo "✅ Connected to server"
 
-            cd /var/www/html
+            echo "🚀 Starting deployment"
 
-            if [ ! -d "crm/.git" ]; then
-              rm -rf crm
-              git clone -b main git@github.com:khalid7879/crm.git crm
-            else
-              cd crm
-              git pull origin main || git fetch --all && git reset --hard origin/main
-            fi
+            cd /var/www/html/crm
 
-            cd crm
+            echo "📦 Pull latest Docker image"
+            docker pull rupy7879/crm:latest
 
-            echo "✅ Latest code pulled"
+            echo "🛑 Stopping containers"
+            docker compose down
 
-            # === Add your build/deploy commands here ===
-            # composer install --no-dev --optimize-autoloader
-            # php artisan migrate --force
-            # php artisan optimize:clear
-            # systemctl restart nginx php-fpm
-            # pm2 restart all   # if using Node.js
+            echo "🚀 Starting containers"
+            docker compose up -d
 
+            echo "🧹 Cleaning old images"
+            docker image prune -f
 
-            # ────────────────────────────────────────────────
-            #  Rebuild & restart only the app container
-            #  (fastest option if docker-compose supports it)
-            # ────────────────────────────────────────────────
-              docker-compose rm -f -s app
-              docker-compose build --no-cache app
-              docker-compose up -d --force-recreate --no-deps app
-
-            # Optional: also restart webserver if you changed nginx config
-            # docker-compose up -d --force-recreate --no-deps webserver
-
-            echo "🎉 Deployment completed successfully!"
+            echo "✅ Deployment completed"
